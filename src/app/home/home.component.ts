@@ -8,10 +8,17 @@ import { UserService, AuthenticationService } from '@app/_services';
 export class HomeComponent {
     loading = false;
     users: User[];
-
+    loggedInUser : string
+    loggedInUserDetails: string
     constructor(private userService: UserService) { }
 
     ngOnInit() {
+
+        this.loggedInUserDetails = localStorage.getItem("currentUser")
+        var json = JSON.parse(this.loggedInUserDetails);
+        this.loggedInUser = json["username"];
+
+        
         this.loading = true;
         this.userService.getAll().pipe(first()).subscribe(users => {
             this.loading = false;
